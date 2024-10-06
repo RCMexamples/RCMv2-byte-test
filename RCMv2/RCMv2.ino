@@ -6,9 +6,9 @@
 uncomment one of the following lines depending on which hardware you have
 Remember to also choose the "environment" for your microcontroller in PlatformIO
 */
-#define RCM_HARDWARE_VERSION RCM_ORIGINAL // versions 1, 2, 3, and 3.1 of the original RCM hardware // https://github.com/RCMgames/RCM_hardware_documentation_and_user_guide
+// #define RCM_HARDWARE_VERSION RCM_ORIGINAL // versions 1, 2, 3, and 3.1 of the original RCM hardware // https://github.com/RCMgames/RCM_hardware_documentation_and_user_guide
 // #define RCM_HARDWARE_VERSION RCM_4_V1 // version 1 of the RCM 4 // https://github.com/RCMgames/RCM-Hardware-V4
-// #define RCM_HARDWARE_VERSION RCM_BYTE_V2 // version 2 of the RCM BYTE // https://github.com/RCMgames/RCM-Hardware-BYTE
+#define RCM_HARDWARE_VERSION RCM_BYTE_V2 // version 2 of the RCM BYTE // https://github.com/RCMgames/RCM-Hardware-BYTE
 // #define RCM_HARDWARE_VERSION RCM_NIBBLE_V1 // version 1 of the RCM Nibble // https://github.com/RCMgames/RCM-Hardware-Nibble
 // #define RCM_HARDWARE_VERSION RCM_D1_V1 // version 1 of the RCM D1 // https://github.com/RCMgames/RCM-Hardware-D1
 
@@ -25,30 +25,121 @@ uncomment one of the following lines depending on which communication method you
 // https://github.com/RCMgames/useful-code/tree/main/boards
 // See this page for information about how to set up a robot's drivetrain using the JMotor library
 // https://github.com/joshua-8/JMotor/wiki/How-to-set-up-a-drivetrain
+// all the servo drivers
+JMotorDriverEsp32Servo servo1 = JMotorDriverEsp32Servo(port1);
+JMotorDriverEsp32Servo servo2 = JMotorDriverEsp32Servo(port2);
+JMotorDriverEsp32Servo servo3 = JMotorDriverEsp32Servo(port3);
+JMotorDriverEsp32Servo servo4 = JMotorDriverEsp32Servo(port4);
+JMotorDriverEsp32Servo servo5 = JMotorDriverEsp32Servo(port5);
+JMotorDriverEsp32Servo servo6 = JMotorDriverEsp32Servo(port6);
+JMotorDriverEsp32Servo servo7 = JMotorDriverEsp32Servo(port7);
+JMotorDriverEsp32Servo servo8 = JMotorDriverEsp32Servo(port8);
 
+// all the motor drivers
+JMotorDriverTMC7300 motorA = JMotorDriverTMC7300(portA);
+JMotorDriverTMC7300 motorB = JMotorDriverTMC7300(portB);
+JMotorDriverTMC7300 motorC = JMotorDriverTMC7300(portC);
+JMotorDriverTMC7300 motorD = JMotorDriverTMC7300(portD);
+JMotorDriverTMC7300 motorE = JMotorDriverTMC7300(portE);
+JMotorDriverTMC7300 motorF = JMotorDriverTMC7300(portF);
+JMotorDriverTMC7300 motorG = JMotorDriverTMC7300(portG);
+JMotorDriverTMC7300 motorH = JMotorDriverTMC7300(portH);
+
+// variables for the drivers
+float servo1Val = 0;
+float servo2Val = 0;
+float servo3Val = 0;
+float servo4Val = 0;
+float servo5Val = 0;
+float servo6Val = 0;
+float servo7Val = 0;
+float servo8Val = 0;
+
+float motorAVal = 0;
+float motorBVal = 0;
+float motorCVal = 0;
+float motorDVal = 0;
+float motorEVal = 0;
+float motorFVal = 0;
+float motorGVal = 0;
+float motorHVal = 0;
 
 void Enabled()
 {
     // code to run while enabled, put your main code here
+    // set all the motor drivers (you can put this in Enabled())
+    servo1.set(servo1Val);
+    servo2.set(servo2Val);
+    servo3.set(servo3Val);
+    servo4.set(servo4Val);
+    servo5.set(servo5Val);
+    servo6.set(servo6Val);
+    servo7.set(servo7Val);
+    servo8.set(servo8Val);
 
+    motorA.set(motorAVal);
+    motorB.set(motorBVal);
+    motorC.set(motorCVal);
+    motorD.set(motorDVal);
+    motorE.set(motorEVal);
+    motorF.set(motorFVal);
+    motorG.set(motorGVal);
+    motorH.set(motorHVal);
 }
 
 void Enable()
 {
     // turn on outputs
+    // enable all the motor drivers (you can put this in Enable())
+    servo1.enable();
+    servo2.enable();
+    servo3.enable();
+    servo4.enable();
+    servo5.enable();
+    servo6.enable();
+    servo7.enable();
+    servo8.enable();
 
+    motorA.enable();
+    motorB.enable();
+    motorC.enable();
+    motorD.enable();
+    motorE.enable();
+    motorF.enable();
+    motorG.enable();
+    motorH.enable();
 }
 
 void Disable()
 {
     // turn off outputs
+    // disable all the motor drivers (you can put this in Disable())
+    servo1.disable();
+    servo2.disable();
+    servo3.disable();
+    servo4.disable();
+    servo5.disable();
+    servo6.disable();
+    servo7.disable();
+    servo8.disable();
 
+    motorA.disable();
+    motorB.disable();
+    motorC.disable();
+    motorD.disable();
+    motorE.disable();
+    motorF.disable();
+    motorG.disable();
+    motorH.disable();
 }
 
 void PowerOn()
 {
     // runs once on robot startup, set pin modes and use begin() if applicable here
-
+    // TMC7300_AB.writeField(TMC7300_IRUN, 12); // current limit max 31
+    // TMC7300_CD.writeField(TMC7300_IRUN, 12);
+    // TMC7300_EF.writeField(TMC7300_IRUN, 12);
+    // TMC7300_GH.writeField(TMC7300_IRUN, 12);
 }
 
 void Always()
@@ -64,13 +155,29 @@ void WifiDataToParse()
 {
     enabled = EWD::recvBl();
     // add data to read here: (EWD::recvBl, EWD::recvBy, EWD::recvIn, EWD::recvFl)(boolean, byte, int, float)
+    // receive values for all the variables (you can put this in WifiDataToParse())
+    motorAVal = EWD::recvFl();
+    motorBVal = EWD::recvFl();
+    motorCVal = EWD::recvFl();
+    motorDVal = EWD::recvFl();
+    motorEVal = EWD::recvFl();
+    motorFVal = EWD::recvFl();
+    motorGVal = EWD::recvFl();
+    motorHVal = EWD::recvFl();
 
+    servo1Val = EWD::recvFl();
+    servo2Val = EWD::recvFl();
+    servo3Val = EWD::recvFl();
+    servo4Val = EWD::recvFl();
+    servo5Val = EWD::recvFl();
+    servo6Val = EWD::recvFl();
+    servo7Val = EWD::recvFl();
+    servo8Val = EWD::recvFl();
 }
 void WifiDataToSend()
 {
     EWD::sendFl(voltageComp.getSupplyVoltage());
     // add data to send here: (EWD::sendBl(), EWD::sendBy(), EWD::sendIn(), EWD::sendFl())(boolean, byte, int, float)
-
 }
 
 void configWifi()
