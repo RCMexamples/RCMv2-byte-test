@@ -1,7 +1,9 @@
 # RCMv2
 https://github.com/rcmgames/RCMv2
 
-### Test all ports of an [RCM BYTE](https://github.com/rcmgames/RCM-Hardware-BYTE)
+Work on creating AutoTuneJMotorCompStandard, a class for tuning automatically finding JMotorCompStandard motor calibration values.
+
+To use, open a serial monitor then enable the robot. No other inputs do anything. After a couple minutes the calibration should finish.
 
 ### Open in VSCode (using [PlatformIO](https://platformio.org/platformio-ide)), or use the Arduino IDE.
 

@@ -64,73 +64,86 @@ float motorFVal = 0;
 float motorGVal = 0;
 float motorHVal = 0;
 
+#include "AutoTuneJMotorCompStandard.h"
+
+ByteSizedEncoderDecoder bsed = ByteSizedEncoderDecoder(&Wire1, 14, 0, 0);
+JEncoderBSED encoder1 = JEncoderBSED(bsed, 0, false, 1.0);
+
+JMotorCompStandardConfig motorConfig = JMotorCompStandardConfig(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0);
+
+AutoTuneJMotorCompStandard tuner = AutoTuneJMotorCompStandard(encoder1, motorA, voltageComp, motorConfig);
+
 void Enabled()
 {
     // code to run while enabled, put your main code here
     // set all the motor drivers (you can put this in Enabled())
-    servo1.set(servo1Val);
-    servo2.set(servo2Val);
-    servo3.set(servo3Val);
-    servo4.set(servo4Val);
-    servo5.set(servo5Val);
-    servo6.set(servo6Val);
-    servo7.set(servo7Val);
-    servo8.set(servo8Val);
+    // servo1.set(servo1Val);
+    // servo2.set(servo2Val);
+    // servo3.set(servo3Val);
+    // servo4.set(servo4Val);
+    // servo5.set(servo5Val);
+    // servo6.set(servo6Val);
+    // servo7.set(servo7Val);
+    // servo8.set(servo8Val);
 
-    motorA.set(motorAVal);
-    motorB.set(motorBVal);
-    motorC.set(motorCVal);
-    motorD.set(motorDVal);
-    motorE.set(motorEVal);
-    motorF.set(motorFVal);
-    motorG.set(motorGVal);
-    motorH.set(motorHVal);
+    // motorA.set(motorAVal);
+    // motorB.set(motorBVal);
+    // motorC.set(motorCVal);
+    // motorD.set(motorDVal);
+    // motorE.set(motorEVal);
+    // motorF.set(motorFVal);
+    // motorG.set(motorGVal);
+    // motorH.set(motorHVal);
+
+    tuner.tune();
 }
 
 void Enable()
 {
+    tuner.start();
     // turn on outputs
     // enable all the motor drivers (you can put this in Enable())
-    servo1.enable();
-    servo2.enable();
-    servo3.enable();
-    servo4.enable();
-    servo5.enable();
-    servo6.enable();
-    servo7.enable();
-    servo8.enable();
+    // servo1.enable();
+    // servo2.enable();
+    // servo3.enable();
+    // servo4.enable();
+    // servo5.enable();
+    // servo6.enable();
+    // servo7.enable();
+    // servo8.enable();
 
-    motorA.enable();
-    motorB.enable();
-    motorC.enable();
-    motorD.enable();
-    motorE.enable();
-    motorF.enable();
-    motorG.enable();
-    motorH.enable();
+    // motorA.enable();
+    // motorB.enable();
+    // motorC.enable();
+    // motorD.enable();
+    // motorE.enable();
+    // motorF.enable();
+    // motorG.enable();
+    // motorH.enable();
 }
 
 void Disable()
 {
+    tuner.stop();
     // turn off outputs
     // disable all the motor drivers (you can put this in Disable())
-    servo1.disable();
-    servo2.disable();
-    servo3.disable();
-    servo4.disable();
-    servo5.disable();
-    servo6.disable();
-    servo7.disable();
-    servo8.disable();
+    // servo1.disable();
+    // servo2.disable();
+    // servo3.disable();
+    // servo4.disable();
+    // servo5.disable();
+    // servo6.disable();
+    // servo7.disable();
+    // servo8.disable();
 
-    motorA.disable();
-    motorB.disable();
-    motorC.disable();
-    motorD.disable();
-    motorE.disable();
-    motorF.disable();
-    motorG.disable();
-    motorH.disable();
+    // motorA.disable();
+    // motorB.disable();
+    // motorC.disable();
+    // motorD.disable();
+    // motorE.disable();
+    // motorF.disable();
+    // motorG.disable();
+    // motorH.disable();
 }
 
 void PowerOn()
@@ -140,12 +153,14 @@ void PowerOn()
     // TMC7300_CD.writeField(TMC7300_IRUN, 12);
     // TMC7300_EF.writeField(TMC7300_IRUN, 12);
     // TMC7300_GH.writeField(TMC7300_IRUN, 12);
+    Wire1.begin();
 }
 
 void Always()
 {
     // always runs if void loop is running, JMotor run() functions should be put here
     // (but only the "top level", for example if you call drivetrainController.run() you shouldn't also call leftMotorController.run())
+    bsed.run();
 
     delay(1);
 }
