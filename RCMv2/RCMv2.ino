@@ -67,7 +67,7 @@ float motorHVal = 0;
 #include "AutoTuneJMotorCompStandard.h"
 
 ByteSizedEncoderDecoder bsed = ByteSizedEncoderDecoder(&Wire1, 14, 0, 0);
-JEncoderBSED encoder1 = JEncoderBSED(bsed, 0, false, 1.0);
+JEncoderBSED encoder1 = JEncoderBSED(bsed, 1, false, 1.0);
 
 JMotorCompStandardConfig motorConfig = JMotorCompStandardConfig(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0);
 
