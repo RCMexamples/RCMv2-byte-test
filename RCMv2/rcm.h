@@ -196,14 +196,16 @@ TMC7300IC TMC7300_GH = TMC7300IC(portGH);
 #define portG TMC7300_GH, 1
 #define portH TMC7300_GH, 0
 
-JMotorDriverTMC7300 motorDriverA = JMotorDriverTMC7300(portA);
-JMotorDriverTMC7300 motorDriverB = JMotorDriverTMC7300(portB);
-JMotorDriverTMC7300 motorDriverC = JMotorDriverTMC7300(portC);
-JMotorDriverTMC7300 motorDriverD = JMotorDriverTMC7300(portD);
-JMotorDriverTMC7300 motorDriverE = JMotorDriverTMC7300(portE);
-JMotorDriverTMC7300 motorDriverF = JMotorDriverTMC7300(portF);
-JMotorDriverTMC7300 motorDriverG = JMotorDriverTMC7300(portG);
-JMotorDriverTMC7300 motorDriverH = JMotorDriverTMC7300(portH);
+boolean checkDriver = true;
+
+JMotorDriverTMC7300 motorDriverA = JMotorDriverTMC7300(portA, checkDriver);
+JMotorDriverTMC7300 motorDriverB = JMotorDriverTMC7300(portB, checkDriver);
+JMotorDriverTMC7300 motorDriverC = JMotorDriverTMC7300(portC, checkDriver);
+JMotorDriverTMC7300 motorDriverD = JMotorDriverTMC7300(portD, checkDriver);
+JMotorDriverTMC7300 motorDriverE = JMotorDriverTMC7300(portE, checkDriver);
+JMotorDriverTMC7300 motorDriverF = JMotorDriverTMC7300(portF, checkDriver);
+JMotorDriverTMC7300 motorDriverG = JMotorDriverTMC7300(portG, checkDriver);
+JMotorDriverTMC7300 motorDriverH = JMotorDriverTMC7300(portH, checkDriver);
 
 void setupMotors()
 {

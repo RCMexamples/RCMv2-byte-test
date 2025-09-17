@@ -85,6 +85,30 @@ void Enabled()
     motorF.set(motorFVal);
     motorG.set(motorGVal);
     motorH.set(motorHVal);
+
+    printDebugInfoForMotorDriver(motorA.ic);
+}
+
+void printDebugInfoForMotorDriver(TMC7300IC& ic)
+{
+    // see table 5.3.3 https://www.analog.com/media/en/technical-documentation/data-sheets/TMC7300_datasheet_rev1.08.pdf
+    static unsigned long lastPrint = 0;
+    if (millis() - lastPrint < 100) {
+        return; // don't print too fast to read
+    }
+    lastPrint = millis();
+    Serial.flush();
+    delay(10);
+    uint32_t drvErrorField = ic.readField(TMC7300_DRV_ERR);
+    Serial.print(drvErrorField);
+    uint32_t value;
+    Serial.flush();
+    delay(10);
+    if (ic.readRegister(_TMC7300_DRVSTATUS, value)) {
+        Serial.print(" DRVSTATUS: ");
+        Serial.print(value & 0b1111111111, BIN);
+    }
+    Serial.println();
 }
 
 void Enable()
@@ -136,7 +160,7 @@ void Disable()
 void PowerOn()
 {
     // runs once on robot startup, set pin modes and use begin() if applicable here
-    // TMC7300_AB.writeField(TMC7300_IRUN, 12); // current limit max 31
+    TMC7300_AB.writeField(TMC7300_IRUN, 12); // current limit max 31
     // TMC7300_CD.writeField(TMC7300_IRUN, 12);
     // TMC7300_EF.writeField(TMC7300_IRUN, 12);
     // TMC7300_GH.writeField(TMC7300_IRUN, 12);
